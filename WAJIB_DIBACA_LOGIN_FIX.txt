@@ -1,0 +1,27 @@
+ZIP ini untuk kasus:
+- QR bisa discan
+- WhatsApp muncul di Perangkat Tertaut
+- Tapi status masih need_scan
+- Tidak muncul log ready
+- Bot tidak respon
+
+Perubahan:
+- QR dihapus setelah event authenticated
+- Log loading_screen/change_state ditambahkan
+- Chromium args dibuat lebih ringan untuk Render
+- LocalAuth diberi dataPath tetap
+- Auto coba initialize ulang kalau disconnected
+
+Upload isi ZIP ini ke GitHub, bukan ZIP-nya.
+
+Pastikan service Render memakai Runtime Docker.
+Setelah upload:
+Manual Deploy > Clear build cache & deploy
+
+Tes:
+1. Buka https://botwaites-1.onrender.com/status
+2. Buka https://botwaites-1.onrender.com/qr
+3. Scan sekali saja, jangan scan ulang.
+4. Tunggu 1-3 menit.
+5. Status harus berubah authenticated lalu ready.
+6. Tes dari NOMOR LAIN: !ping atau !menu
