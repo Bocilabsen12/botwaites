@@ -3,11 +3,15 @@ import fs from 'node:fs';
 import path from 'node:path';
 import puppeteer from 'puppeteer';
 
-process.env.PUPPETEER_CACHE_DIR ||= '/opt/render/project/src/.cache/puppeteer';
+const projectCache = '/opt/render/project/src/.cache/puppeteer';
+const homeCache = '/opt/render/.cache/puppeteer';
+
+process.env.PUPPETEER_CACHE_DIR ||= projectCache;
 process.env.PUPPETEER_SKIP_DOWNLOAD ||= 'false';
 
 function findChromeFile(dir) {
-  if (!fs.existsSync(dir)) return null;
+  if (!dir || !fs.existsSync(dir)) return null;
+
   const stack = [dir];
 
   while (stack.length) {
@@ -28,7 +32,7 @@ function findChromeFile(dir) {
       } else if (
         entry.isFile() &&
         entry.name === 'chrome' &&
-        full.includes('chrome-linux')
+        (full.includes('chrome-linux') || full.includes('chrome-headless-shell'))
       ) {
         return full;
       }
@@ -38,43 +42,71 @@ function findChromeFile(dir) {
   return null;
 }
 
-console.log('[Render Start] PUPPETEER_CACHE_DIR =', process.env.PUPPETEER_CACHE_DIR);
-console.log('[Render Start] Memastikan Chrome Puppeteer terinstall...');
-
-const npxCommand = process.platform === 'win32' ? 'npx.cmd' : 'npx';
-const installResult = spawnSync(
-  npxCommand,
-  ['puppeteer', 'install', 'chrome@stable'],
-  {
+function run(command, args) {
+  console.log('[Render Start] RUN:', command, args.join(' '));
+  const result = spawnSync(command, args, {
     stdio: 'inherit',
     env: process.env
-  }
-);
+  });
 
-if (installResult.status !== 0) {
-  console.error('[Render Start] Gagal install Chrome Puppeteer. Exit code:', installResult.status);
-  process.exit(installResult.status || 1);
+  if (result.status !== 0) {
+    console.log('[Render Start] Command exit:', result.status);
+  }
+
+  return result.status === 0;
 }
 
-let executablePath = '';
-try {
-  executablePath = puppeteer.executablePath();
-} catch {}
+console.log('[Render Start] PUPPETEER_CACHE_DIR =', process.env.PUPPETEER_CACHE_DIR);
 
-const foundChrome = findChromeFile(process.env.PUPPETEER_CACHE_DIR);
+let chromePath =
+  process.env.PUPPETEER_EXECUTABLE_PATH ||
+  findChromeFile(projectCache) ||
+  findChromeFile(homeCache) ||
+  findChromeFile(process.env.PUPPETEER_CACHE_DIR);
 
-if (foundChrome) {
-  process.env.PUPPETEER_EXECUTABLE_PATH = foundChrome;
-  console.log('[Render Start] Chrome ditemukan:', foundChrome);
-} else if (executablePath && fs.existsSync(executablePath)) {
-  process.env.PUPPETEER_EXECUTABLE_PATH = executablePath;
-  console.log('[Render Start] Chrome ditemukan via Puppeteer:', executablePath);
-} else {
+if (!chromePath) {
+  console.log('[Render Start] Chrome belum ditemukan. Install Chrome Puppeteer...');
+  run('npx', ['puppeteer', 'install', 'chrome@stable']);
+}
+
+chromePath =
+  process.env.PUPPETEER_EXECUTABLE_PATH ||
+  findChromeFile(projectCache) ||
+  findChromeFile(homeCache) ||
+  findChromeFile(process.env.PUPPETEER_CACHE_DIR);
+
+if (!chromePath) {
+  console.log('[Render Start] Coba install ke cache project...');
+  run('npx', ['@puppeteer/browsers', 'install', 'chrome@stable', '--path', projectCache]);
+}
+
+chromePath =
+  process.env.PUPPETEER_EXECUTABLE_PATH ||
+  findChromeFile(projectCache) ||
+  findChromeFile(homeCache) ||
+  findChromeFile(process.env.PUPPETEER_CACHE_DIR);
+
+if (!chromePath) {
+  let executablePath = '';
+  try {
+    executablePath = puppeteer.executablePath();
+  } catch {}
+
+  if (executablePath && fs.existsSync(executablePath)) {
+    chromePath = executablePath;
+  }
+}
+
+if (!chromePath) {
   console.error('[Render Start] Chrome masih tidak ditemukan.');
-  console.error('[Render Start] puppeteer.executablePath() =', executablePath);
-  console.error('[Render Start] Isi cache dir mungkin kosong:', process.env.PUPPETEER_CACHE_DIR);
+  console.error('[Render Start] Cek apakah build command dan env sudah benar.');
+  console.error('[Render Start] projectCache:', projectCache);
+  console.error('[Render Start] homeCache:', homeCache);
   process.exit(1);
 }
 
+process.env.PUPPETEER_EXECUTABLE_PATH = chromePath;
+console.log('[Render Start] Chrome ditemukan:', chromePath);
 console.log('[Render Start] Menjalankan bot...');
+
 await import('../src/index.js');
