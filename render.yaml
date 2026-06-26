@@ -1,12 +1,5 @@
 services:
   - type: web
     name: botwaites
-    env: node
+    env: docker
     plan: free
-    buildCommand: npm install && npm run install:chrome
-    startCommand: npm start
-    envVars:
-      - key: PUPPETEER_CACHE_DIR
-        value: /opt/render/project/src/.cache/puppeteer
-      - key: PUPPETEER_SKIP_DOWNLOAD
-        value: "false"
