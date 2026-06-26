@@ -1,0 +1,33 @@
+UPLOAD KE GITHUB:
+Upload SEMUA isi folder hasil extract ZIP ini, bukan file ZIP-nya saja.
+
+PASTIKAN DI GITHUB ADA:
+- package.json
+- render.yaml
+- .puppeteerrc.cjs
+- src/index.js
+- scripts/start-render.js
+- data/
+- workflows/
+
+SETTING RENDER:
+Build Command:
+npm install && npm run install:chrome
+
+Start Command:
+npm start
+
+Environment:
+PUPPETEER_CACHE_DIR=/opt/render/project/src/.cache/puppeteer
+PUPPETEER_SKIP_DOWNLOAD=false
+
+SETELAH GANTI FILE:
+Manual Deploy > Clear build cache & deploy
+
+Kalau benar, log akan menampilkan:
+node scripts/start-render.js
+[Render Start] Chrome ditemukan:
+[Render Start] Menjalankan bot...
+
+Lalu buka:
+https://botwaites.onrender.com/qr
