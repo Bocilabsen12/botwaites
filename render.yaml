@@ -1,7 +1,0 @@
-services:
-  - type: web
-    name: bot-wa-render
-    env: node
-    plan: free
-    buildCommand: npm install
-    startCommand: npm start
