@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import puppeteer from 'puppeteer';
 import express from 'express';
 import QRCode from 'qrcode';
 import qrcode from 'qrcode-terminal';
@@ -128,6 +129,7 @@ app.listen(PORT, () => {
 const client = new Client({
   authStrategy: new LocalAuth({ clientId: 'lywbu-ai-bot' }),
   puppeteer: {
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || puppeteer.executablePath(),
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   }
