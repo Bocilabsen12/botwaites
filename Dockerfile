@@ -1,15 +1,16 @@
 FROM node:20-bookworm-slim
 
 ENV NODE_ENV=production
+ENV PORT=10000
 ENV PUPPETEER_SKIP_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
-ENV PORT=10000
+ENV WWEBJS_AUTH_PATH=/app/.wwebjs_auth
 
-# Install Chromium dan dependency yang dibutuhkan WhatsApp Web/Puppeteer
 RUN apt-get update && apt-get install -y --no-install-recommends \
     chromium \
     ca-certificates \
     fonts-liberation \
+    fonts-noto-color-emoji \
     libasound2 \
     libatk-bridge2.0-0 \
     libatk1.0-0 \
