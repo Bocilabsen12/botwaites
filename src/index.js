@@ -129,7 +129,7 @@ app.listen(PORT, () => {
 const client = new Client({
   authStrategy: new LocalAuth({ clientId: 'lywbu-ai-bot' }),
   puppeteer: {
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || puppeteer.executablePath(),
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium',
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   }
