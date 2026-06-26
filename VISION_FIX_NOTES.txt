@@ -1,0 +1,15 @@
+AI LUKY Vision Fix
+
+Fitur:
+1. Kirim gambar dengan caption pertanyaan, contoh: "ini gambar apa?"
+2. Reply gambar lalu ketik pertanyaan biasa, contoh: "jelaskan ini"
+3. Reply/kirim gambar dengan command !ai <pertanyaan>
+4. !lihat tetap bisa dipakai.
+
+Default vision model di .env dibuat VISION_MODEL=gemma3:4b karena user sudah menjalankan gemma3:4b.
+Kalau mau pakai Qwen vision, install dulu:
+ollama pull qwen3-vl:8b
+lalu ubah .env:
+VISION_MODEL=qwen3-vl:8b
+
+Jika error 404, artinya nama model di .env belum ada di `ollama list`.

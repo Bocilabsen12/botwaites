@@ -1,0 +1,19 @@
+AI LUKY Vision Memory Fix
+
+Perbaikan penting:
+- Kalau user kirim gambar tanpa caption, bot menyimpan gambar itu selama 5 menit.
+- Setelah itu user bisa tanya biasa: "ini gambar apa?"
+- Reply gambar lalu tanya tetap bisa.
+- Kirim gambar dengan caption pertanyaan tetap bisa.
+- !lihat juga bisa mengambil gambar terakhir jika user sudah kirim gambar dulu.
+
+Tes:
+1. Kirim foto tanpa caption.
+2. Bot harus jawab: "Gambar aku terima..."
+3. Kirim: "ini gambar apa?"
+4. Bot harus menjawab isi gambar.
+
+Jika masih gagal:
+- Buka logs/error.log
+- Cari baris error paling bawah.
+- Pastikan `ollama list` menampilkan model yang sama dengan VISION_MODEL di .env.

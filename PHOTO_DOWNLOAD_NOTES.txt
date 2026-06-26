@@ -1,0 +1,26 @@
+AI LUKY Photo Download
+
+Fitur baru:
+!foto <url>
+!photo <url>
+!thumb <url>
+!thumbnail <url>
+
+Fungsi:
+- Mengambil foto/thumbnail dari link yang didukung yt-dlp.
+- Cocok untuk thumbnail YouTube, TikTok, Facebook, Instagram, dan beberapa situs lain.
+- Untuk link slideshow/foto, hasil tergantung dukungan yt-dlp dan akses publik.
+- Bot mengirim maksimal 5 gambar pertama agar tidak spam.
+
+Contoh:
+!foto https://vt.tiktok.com/xxxx
+!foto https://www.instagram.com/p/xxxx
+!foto https://www.facebook.com/xxxx
+!thumb https://youtu.be/xxxx
+
+Catatan:
+- Gunakan hanya untuk konten milik sendiri, public domain, atau berizin.
+- Link private/login-only bisa gagal.
+- Kalau gagal 403/404, update yt-dlp:
+  yt-dlp --update-to nightly
+  yt-dlp --rm-cache-dir

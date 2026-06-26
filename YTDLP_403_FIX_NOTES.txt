@@ -1,0 +1,17 @@
+AI LUKY yt-dlp 403 Fix
+
+Perbaikan kode:
+- Link YouTube youtu.be otomatis dibersihkan menjadi youtube.com/watch?v=ID
+- Parameter tracking seperti ?si=... dibuang
+- yt-dlp dijalankan dengan --rm-cache-dir dan --force-ipv4
+- Error HTTP 403 dibuat lebih jelas di WhatsApp
+
+Tetap perlu dilakukan di Windows:
+yt-dlp --version
+yt-dlp --update-to nightly
+yt-dlp --rm-cache-dir
+
+Jika update dengan pip:
+py -m pip install -U --pre "yt-dlp[default]"
+
+Pakai fitur download hanya untuk konten milik sendiri, public domain, atau yang kamu punya izin.

@@ -1,0 +1,20 @@
+AI LUKY Smart Image Prompt
+
+Fitur baru:
+- Sebelum generate gambar, AI LUKY memakai Gemma/CHAT_MODEL untuk membuat prompt gambar lebih detail.
+- Kalau prompt menyebut tokoh/tempat/hal nyata seperti Jokowi, presiden, artis, tempat nyata, dll, bot bisa search internet dulu.
+- !img <prompt> dan !ai buatkan gambar ... sama-sama memakai prompt enhancer.
+
+Command baru:
+!promptimg <prompt>
+  Melihat prompt final dari Gemma tanpa generate gambar.
+
+Contoh:
+!promptimg buatkan gambar presiden Jokowi realistis
+!ai buatkan gambar mobil sport merah
+!img presiden Jokowi memakai jas hitam, realistic portrait
+
+Catatan:
+- Search internet hanya membantu deskripsi visual umum, bukan menjamin wajah 100% sama.
+- Agar wajah tokoh benar-benar mirip, Stable Diffusion butuh model/LoRA/checkpoint yang cocok atau reference image workflow.
+- Jangan gunakan untuk penipuan, hoaks, atau menyamar sebagai orang nyata.

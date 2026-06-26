@@ -1,0 +1,21 @@
+AI LUKY Image API 404 Fix
+
+Masalah:
+- Bot error: Request failed with status code 404 saat generate gambar.
+- Biasanya WebUI jalan, tapi API /sdapi/v1/txt2img tidak aktif karena webui-user.bat belum pakai --api.
+
+Perbaikan:
+- src/image.js sekarang memberi pesan error yang jelas.
+- Tambah command:
+  !cekimg / !cekgambar
+  untuk cek apakah Stable Diffusion API aktif.
+
+Cara pakai:
+1. Pastikan WebUI berjalan dengan:
+   set COMMANDLINE_ARGS=--api
+2. Jalankan WebUI ulang.
+3. Jalankan bot.
+4. Di WhatsApp ketik:
+   !cekimg
+5. Kalau OK, tes:
+   !ai buatkan gambar mobil sport merah

@@ -1,0 +1,18 @@
+AI LUKY Time Aware
+
+Fitur baru:
+- AI LUKY sekarang selalu diberi konteks waktu saat menjawab.
+- Default timezone: Asia/Jakarta / WIB.
+- AI bisa jawab pertanyaan:
+  "jam berapa sekarang?"
+  "hari ini hari apa?"
+  "tanggal berapa sekarang?"
+  "sekarang bulan apa?"
+
+Command baru:
+!jam
+!waktu
+!tanggal
+
+Ubah zona waktu di .env:
+TIMEZONE=Asia/Jakarta

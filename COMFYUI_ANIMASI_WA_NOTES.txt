@@ -1,0 +1,50 @@
+AI LUKY ComfyUI AnimateDiff WhatsApp
+
+Fitur baru:
+!animasi <prompt>
+!animate <prompt>
+!t2v <prompt>
+!comfyvideo <prompt>
+
+Fungsi:
+- Bot WhatsApp mengirim prompt ke ComfyUI API di http://127.0.0.1:8188
+- ComfyUI menjalankan workflow AnimateDiff kamu.
+- Hasil MP4/WebM/GIF dari ComfyUI dikirim balik ke WhatsApp.
+
+Syarat:
+1. ComfyUI harus hidup:
+   E:
+   cd \ComfyUI_windows_portable
+   .\run_nvidia_gpu.bat
+
+2. Workflow AnimateDiff harus sudah bisa Run manual di ComfyUI dan keluar MP4.
+
+3. Export/Save workflow sebagai API JSON, lalu simpan ke:
+   E:\lywbu-wa-ai-bot\workflows\animatediff-api.json
+
+4. Jalankan bot:
+   E:
+   cd \lywbu-wa-ai-bot
+   npm.cmd install
+   npm.cmd start
+
+Contoh command WhatsApp:
+!animasi mobil besar melaju kencang di jalan tol malam hari
+!animasi orang berjalan pelan di trotoar, full body, cinematic
+
+Setting .env:
+COMFY_URL=http://127.0.0.1:8188
+COMFY_WORKFLOW=workflows/animatediff-api.json
+COMFY_WIDTH=384
+COMFY_HEIGHT=384
+COMFY_FRAMES=16
+COMFY_FPS=8
+COMFY_STEPS=12
+COMFY_CFG=7
+
+Kalau auto patch prompt salah:
+- Buka file animatediff-api.json
+- Cari node CLIPTextEncode positif/negatif
+- Isi ID node di .env:
+  COMFY_POSITIVE_NODE=...
+  COMFY_NEGATIVE_NODE=...

@@ -1,0 +1,22 @@
+AI LUKY Better Realtime Search
+
+Fitur baru:
+- Auto-search internet dibuat lebih peka untuk topik yang cepat berubah:
+  Bitcoin, BTC, crypto, harga, market, berita, Piala Dunia 2026, pildun, jadwal, skor, timnas, rilis terbaru, dll.
+- Kalau user tanya lewat !ai tentang Bitcoin/Pildun/berita, bot otomatis cari internet dulu lalu menjawab berdasarkan hasil terbaru.
+- Manual search tetap ada.
+- Command baru:
+  !news <topik>
+  !berita <topik>
+
+Contoh:
+!ai berita bitcoin hari ini
+!ai harga BTC sekarang
+!ai jadwal Piala Dunia 2026 terbaru
+!news bitcoin hari ini
+!berita timnas indonesia terbaru
+!search piala dunia 2026 jadwal fifa
+
+Catatan:
+- Hasil tergantung sumber search yang tersedia.
+- Untuk harga real-time, jawaban tetap bisa berubah cepat, jadi AI akan menyebut bahwa info dapat berubah.
