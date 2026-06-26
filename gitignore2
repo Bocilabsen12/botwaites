@@ -1,0 +1,9 @@
+.env
+node_modules/
+.wwebjs_auth/
+.wwebjs_cache/
+downloads/
+images/
+logs/
+data/memory.json
+npm-debug.log
