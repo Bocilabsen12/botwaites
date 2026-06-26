@@ -1,0 +1,21 @@
+AI LUKY Face Rating Fix
+
+Masalah:
+- Saat menganalisis foto muka/orang, AI sering memberi rating 7/10 walau tidak sesuai.
+
+Perbaikan:
+- AI tidak memberi rating wajah otomatis kecuali user jelas meminta rating.
+- Kalau user meminta rating, AI tidak boleh default 7/10.
+- Rating harus berdasarkan hal yang terlihat di foto:
+  lighting, angle, ekspresi, framing, grooming/kerapian, dan kualitas foto.
+- Kalau foto blur/gelap/kepotong, AI harus bilang tidak yakin.
+- Jawaban rating dibuat lebih jelas dan tidak menghina fisik orang.
+
+Contoh:
+Reply foto + "rating muka ini dari 10"
+AI akan jawab:
+Menurut foto ini: X/10
+Alasan: lighting, angle, ekspresi, framing, kualitas foto.
+
+Reply foto + "ini gimana?"
+AI tidak langsung memberi rating angka, tapi memberi deskripsi/saran.

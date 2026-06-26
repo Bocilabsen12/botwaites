@@ -1,0 +1,20 @@
+AI LUKY No-Spam Vision Fix
+
+Masalah yang diperbaiki:
+- Setelah bot menerima gambar, chat biasa seperti "hai" atau "apa kabar" tidak lagi otomatis masuk vision.
+- Bot hanya melihat gambar jika:
+  1. Pesan itu membawa gambar/reply gambar dengan caption pertanyaan.
+  2. User pakai !lihat atau !ai sambil kirim/reply gambar.
+  3. User bertanya tentang gambar terakhir dengan kata seperti: gambar, foto, screenshot, apa ini, ini gambar apa, jelaskan ini, baca ini, error ini.
+
+Contoh yang masuk vision:
+- Kirim gambar + caption: !ini gambar apa?
+- Kirim gambar + caption: ini gambar apa?
+- Reply gambar: jelaskan ini
+- Kirim gambar dulu, lalu: ini gambar apa?
+
+Contoh yang tidak masuk vision:
+- hai
+- apa kabar
+- buatkan kode
+- tolong bantu aku

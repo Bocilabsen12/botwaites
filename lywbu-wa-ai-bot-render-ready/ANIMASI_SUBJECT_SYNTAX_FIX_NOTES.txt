@@ -1,0 +1,23 @@
+AI LUKY Animasi Subject + Syntax Fix
+
+Perbaikan:
+- Fix SyntaxError di src/ai.js:
+  Unexpected token ')' baris sekitar 483.
+- Prompt enhancer Gemma3:4b tetap aktif.
+- Prompt sekarang lebih setia pada subjek user:
+  jika user minta mobil, prompt tetap fokus pada mobil.
+  jika user minta orang berjalan, prompt tetap fokus pada orang berjalan.
+- Search internet tidak dipakai untuk prompt generik seperti "mobil" / "orang berjalan"
+  supaya hasil tidak melenceng.
+- Search internet tetap dipakai untuk prompt spesifik:
+  tokoh, merek mobil, landmark, karakter, produk, dll.
+
+Tes:
+npm.cmd start
+!promptanimasi mobil sport merah melaju di jalan tol malam hari
+!animasi mobil sport merah melaju di jalan tol malam hari
+
+Saran:
+Untuk mobil lebih stabil, prompt jangan cuma "mobil".
+Pakai detail:
+mobil sport merah, full car visible, 3/4 front view, driving fast on a highway at night, wheels rotating.

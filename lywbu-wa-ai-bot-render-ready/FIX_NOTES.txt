@@ -1,0 +1,22 @@
+AI LUKY - Final Fix
+
+Perbaikan:
+1. Error SyntaxError di src/index.js line sticker sudah dibetulkan.
+   Dari typo: target.id ? ._serialized
+   Menjadi aman:
+   const quotedId = target?.id?._serialized || null;
+2. Default model di .env sudah diganti ke gemma3:4b karena model ini sudah berhasil jalan di PC kamu.
+3. Nama bot dan sticker tetap AI LUKY.
+4. Gaya bahasa tetap aku/kamu.
+
+Cara pakai:
+E:
+cd \lywbu-wa-ai-bot
+copy .env.example .env
+npm.cmd install
+npm.cmd start
+
+Kalau ditanya overwrite saat copy .env, pilih Y.
+
+- Menambahkan fitur `!img` tanpa prompt untuk convert sticker WEBP menjadi foto PNG.
+- Menambahkan dependency `sharp` untuk konversi WEBP -> PNG.

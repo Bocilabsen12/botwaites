@@ -1,0 +1,32 @@
+AI LUKY Natural Chat No KBBI
+
+Masalah:
+- AI terlalu sering melanjutkan jawaban/topik sebelumnya.
+- AI sering menjawab seperti KBBI atau memberi arti kata untuk semua chat.
+- Sapaan/chat pendek terasa tidak natural.
+
+Perbaikan:
+- AI tidak menjawab gaya KBBI kecuali user jelas meminta arti/definisi/translate.
+- Sapaan dan chat pendek dijawab normal, bukan dicari artinya.
+- Search internet tidak dipakai untuk chat pendek/sapaan.
+- Konteks obrolan terakhir dikurangi dari 30 menjadi 12 pesan agar tidak terlalu nyangkut topik lama.
+- AI hanya memakai konteks lama kalau user jelas bilang "lanjut", "tadi", "itu", atau follow-up.
+- Command baru:
+  !naturalreset
+  untuk reset konteks obrolan + cache gambar ruang chat ini kalau AI mulai aneh.
+
+Contoh:
+halo
+=> AI balas sapaan normal.
+
+mobil
+=> AI tidak menjelaskan arti kata mobil seperti KBBI.
+
+apa arti mobil?
+=> AI baru menjelaskan arti.
+
+lanjut tadi
+=> AI memakai konteks sebelumnya.
+
+bitcoin hari ini gimana?
+=> AI tetap search internet.

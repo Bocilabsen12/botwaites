@@ -1,0 +1,34 @@
+AI LUKY ComfyUI Debug Fix
+
+Perbaikan:
+- Error HTTP 500 dari ComfyUI sekarang ditampilkan lebih jelas.
+- Detail error ComfyUI disimpan ke:
+  E:\lywbu-wa-ai-bot\logs\comfy-last-http-error.json
+- Prompt API terakhir yang dikirim bot disimpan ke:
+  E:\lywbu-wa-ai-bot\logs\comfy-last-prompt.json
+- Deteksi kalau file animatediff-api.json ternyata workflow UI biasa, bukan API format.
+- Command baru:
+  !comfycek
+  !cekcomfy
+
+Cara tes:
+1. Jalankan ComfyUI:
+   E:
+   cd \ComfyUI_windows_portable
+   .\run_nvidia_gpu.bat
+
+2. Jalankan bot:
+   E:
+   cd \lywbu-wa-ai-bot
+   npm.cmd start
+
+3. Di WhatsApp:
+   !comfycek
+
+4. Kalau OK:
+   !animasi orang berjalan
+
+Jika masih 500:
+- Kirim isi file:
+  E:\lywbu-wa-ai-bot\logs\comfy-last-http-error.json
+- Kirim juga error terbaru dari terminal ComfyUI.

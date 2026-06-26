@@ -1,0 +1,33 @@
+AI LUKY Video Motion Fix
+
+Penjelasan:
+- Versi sebelumnya hanya membuat beberapa gambar lalu digabung jadi MP4, jadi terlihat seperti slideshow.
+- Versi ini default memakai VIDEO_MOTION_MODE=panzoom:
+  Stable Diffusion membuat 1 keyframe gambar, lalu ffmpeg memberi efek gerak kamera halus seperti zoom/pan.
+- Hasilnya lebih bergerak dan tidak sekaku gambar disatukan.
+
+Mode:
+1. VIDEO_MOTION_MODE=panzoom
+   Default. Lebih rapi dan halus, tapi yang bergerak adalah kamera/zoom, bukan karakter asli.
+
+2. VIDEO_MOTION_MODE=morph
+   Membuat beberapa keyframe lalu memakai interpolasi frame ffmpeg.
+   Bisa terlihat lebih bergerak, tapi kadang objek/wajah bisa berubah-ubah/aneh.
+
+Setting default:
+VIDEO_MOTION_MODE=panzoom
+VIDEO_SECONDS=4
+VIDEO_OUTPUT_FPS=24
+VIDEO_ZOOM_SPEED=0.0018
+VIDEO_WIDTH=512
+VIDEO_HEIGHT=512
+
+Kalau mau coba mode morph:
+VIDEO_MOTION_MODE=morph
+VIDEO_FRAMES=8
+VIDEO_FPS=4
+VIDEO_OUTPUT_FPS=24
+
+Catatan penting:
+- Ini belum video AI asli seperti Runway/Kling/AnimateDiff/SVD.
+- Untuk karakter/objek benar-benar bergerak, perlu install extension/model video AI seperti AnimateDiff atau workflow ComfyUI.
