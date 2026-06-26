@@ -60,7 +60,7 @@ app.get('/', (req, res) => {
 
 app.get('/qr', async (req, res) => {
   try {
-    if (!lastQR) {
+    if (!lastQR || botStatus === 'authenticated' || botStatus === 'ready') {
       return res.send(`
         <html>
           <head>
@@ -103,6 +103,7 @@ app.get('/qr', async (req, res) => {
             <img src="${qrImage}" />
             <p>Buka WhatsApp > Perangkat tertaut > Tautkan perangkat.</p>
             <p>Status: <b>${botStatus}</b></p>
+            <p>Setelah scan, jangan scan QR ulang. Tunggu sampai status berubah authenticated/ready.</p>
             <p><a href="/">Kembali ke status</a></p>
           </div>
         </body>
@@ -121,17 +122,47 @@ app.get('/health', (req, res) => {
   });
 });
 
+app.get('/status', (req, res) => {
+  res.json({
+    ok: true,
+    status: botStatus,
+    hasQR: Boolean(lastQR),
+    uptime_seconds: Math.floor((Date.now() - startTime) / 1000)
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Web status aktif di port ${PORT}`);
 });
 
 
 const client = new Client({
-  authStrategy: new LocalAuth({ clientId: 'lywbu-ai-bot' }),
+  authStrategy: new LocalAuth({
+    clientId: 'lywbu-ai-bot',
+    dataPath: process.env.WWEBJS_AUTH_PATH || '.wwebjs_auth'
+  }),
+  authTimeoutMs: 180000,
+  qrMaxRetries: 0,
+  takeoverOnConflict: true,
+  takeoverTimeoutMs: 0,
   puppeteer: {
     executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium',
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu',
+      '--disable-software-rasterizer',
+      '--disable-extensions',
+      '--disable-background-timer-throttling',
+      '--disable-backgrounding-occluded-windows',
+      '--disable-renderer-backgrounding',
+      '--no-first-run',
+      '--no-default-browser-check',
+      '--disable-features=site-per-process',
+      '--window-size=1280,720'
+    ]
   }
 });
 
@@ -169,9 +200,10 @@ function scopeText(scope) {
 }
 
 
-client.on('qr', (qr) => {
+client.on('qr', async (qr) => {
   lastQR = qr;
   botStatus = 'need_scan';
+  await logInfo('QR baru dibuat. Buka /qr dan scan cepat. Kalau sudah discan, jangan scan ulang.');
   console.log('Scan QR ini pakai WhatsApp, atau buka /qr di URL Render:');
   qrcode.generate(qr, { small: true });
 });
@@ -179,12 +211,13 @@ client.on('qr', (qr) => {
 client.on('ready', async () => {
   lastQR = null;
   botStatus = 'ready';
-  await logInfo(`✅ ${process.env.BOT_NAME || 'AI LUKY'} sudah online`);
+  await logInfo(`✅ READY: ${process.env.BOT_NAME || 'AI LUKY'} sudah online dan siap membalas pesan`);
 });
 
 client.on('authenticated', async () => {
+  lastQR = null;
   botStatus = 'authenticated';
-  await logInfo('✅ WhatsApp authenticated');
+  await logInfo('✅ AUTHENTICATED: QR berhasil discan, menunggu WhatsApp ready...');
 });
 
 client.on('auth_failure', async (msg) => {
@@ -194,8 +227,34 @@ client.on('auth_failure', async (msg) => {
 
 client.on('disconnected', async (reason) => {
   botStatus = 'disconnected';
+  lastQR = null;
   await logError(new Error(reason || 'Disconnected'), { event: 'disconnected' });
+  setTimeout(() => {
+    try {
+      logInfo('Mencoba initialize ulang setelah disconnected...');
+      client.initialize();
+    } catch (err) {
+      logError(err, { event: 'reinitialize_failed' });
+    }
+  }, 10000);
 });
+
+
+client.on('loading_screen', async (percent, message) => {
+  botStatus = `loading_${percent}`;
+  await logInfo(`Loading WhatsApp Web ${percent}%: ${message || ''}`);
+});
+
+client.on('change_state', async (state) => {
+  await logInfo(`WhatsApp state changed: ${state}`);
+});
+
+client.on('message_create', async (msg) => {
+  if (msg.fromMe && String(msg.body || '').trim().toLowerCase() === '!ping') {
+    await logInfo('Pesan !ping terkirim dari nomor bot sendiri. Tes balasan harus dari nomor lain atau grup.');
+  }
+});
+
 
 process.on('unhandledRejection', async (reason) => {
   await logError(reason, { event: 'unhandledRejection' });
