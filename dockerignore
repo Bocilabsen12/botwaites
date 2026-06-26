@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log
+.env
+.wwebjs_auth
+.wwebjs_cache
+logs
+downloads
+images
+*.zip
+.git
+.github
+.cache

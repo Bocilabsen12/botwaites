@@ -1,0 +1,43 @@
+INI VERSI DOCKER UNTUK RENDER.
+
+Kenapa Docker?
+Karena error Chrome/Puppeteer di Render Node susah. Docker ini menginstall Chromium langsung di Linux dan bot dipaksa memakai:
+/usr/bin/chromium
+
+UPLOAD KE GITHUB:
+Upload semua isi hasil extract ZIP ini, bukan ZIP-nya.
+
+PASTIKAN ADA DI GITHUB:
+- Dockerfile
+- package.json
+- render.yaml
+- src/index.js
+- src/
+- data/
+- workflows/
+
+SETTING RENDER:
+Kalau buat service baru:
+New > Web Service > pilih repo > Runtime: Docker > Plan: Free
+
+Kalau service lama masih Node:
+Lebih mudah hapus service Render lama lalu buat Web Service baru dengan Runtime Docker.
+Atau di Settings, ubah Runtime/Environment ke Docker kalau tersedia.
+
+Build Command:
+Kosongkan saja kalau pakai Docker.
+
+Start Command:
+Kosongkan saja kalau pakai Docker.
+
+Environment Variables:
+Tidak wajib untuk Chrome.
+Kalau ada PUPPETEER_CACHE_DIR dan PUPPETEER_SKIP_DOWNLOAD dari percobaan lama, boleh hapus.
+Yang penting Dockerfile sudah ada:
+PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+
+SETELAH DEPLOY:
+Buka:
+https://botwaites.onrender.com/qr
+
+Kalau QR belum muncul, tunggu 30-60 detik lalu refresh.
