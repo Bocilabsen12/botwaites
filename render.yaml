@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: lywbu-wa-ai-bot
+    name: botwaites
     env: node
     plan: free
     buildCommand: npm install && npm run install:chrome
